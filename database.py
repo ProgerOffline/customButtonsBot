@@ -23,3 +23,19 @@ class DatabaseManager:
 				""", (id, )).fetchone()
 
 		return result[0]
+
+	def get_buttons(self):
+		"""
+		Возвращает кортеж со всеми кнопками
+		:param none
+		:return buttons cortege
+		"""
+		connect = sqlite3.connect("data.db")
+		with connect:
+			cursor = connect.cursor()
+			result = cursor.execute("""
+					SELECT row, text
+					FROM markup
+				""").fetchall()
+
+		return result
