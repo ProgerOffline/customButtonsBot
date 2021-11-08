@@ -4,4 +4,4 @@ from aiogram.dispatcher.filters.state import State, StatesGroup
 
 
 class DialogMashine(StatesGroup):
-	check_passwd = State()
+    add_admin = State()
