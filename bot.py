@@ -6,6 +6,8 @@ from aiogram.dispatcher import Dispatcher
 from aiogram.utils import executor
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 
+from database import DatabaseManager
+
 TOKEN = "1614502276:AAFGR_oVKF89-KyrZDKrO5ryeF24yf8Icro"
 
 
@@ -14,12 +16,14 @@ class CustomBot:
 		self.bot = Bot(token)
 		self.dp = Dispatcher(self.bot,  storage=MemoryStorage())
 
+		self.db = DatabaseManager()
+
 	def start(self):
 		@self.dp.message_handler(commands=['start'])
 		async def process_start(message: types.Message):
 			await self.bot.send_message(
 					chat_id=message.chat.id,
-					text=message.text,
+					text=self.db.get_message("1"),
 				)
 
 		executor.start_polling(self.dp, skip_updates=True)
