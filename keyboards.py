@@ -24,8 +24,8 @@ class KeyboardsManager:
 
         buttons = self.db.get_buttons()
         for button in buttons:
-            row = int(button[0]) - 1
-            text = button[1]
+            row = int(button[1]) - 1
+            text = button[2]
             template[row].append(text)
 
         keyboard['keyboard'] = template
@@ -41,7 +41,7 @@ class KeyboardsManager:
         buttons = self.db.get_buttons()
         for button in buttons:
             btn = types.InlineKeyboardButton(
-                    text=button[1],
+                    text=button[2],
                     callback_data=f"admin:buttons:menu:{button[0]}",
                 )
             keyboard.add(btn)   

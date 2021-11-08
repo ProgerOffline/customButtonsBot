@@ -34,7 +34,7 @@ class DatabaseManager:
         with connect:
             cursor = connect.cursor()
             result = cursor.execute("""
-                    SELECT row, text
+                    SELECT *
                     FROM markup
                 """).fetchall()
 
@@ -147,3 +147,20 @@ class DatabaseManager:
                 """, (row, text, msg, ))
 
             connect.commit()         
+
+    def get_button_with_text(self, text):
+        """
+        Получаем данные кнопки по ее тексту
+        :param text
+        :return cortege
+        """
+        connect = sqlite3.connect("data.db")
+        with connect:
+            cursor = connect.cursor()
+            result = cursor.execute("""
+                    SELECT *
+                    FROM markup
+                    WHERE text = ?
+                """, (text, )).fetchone()
+
+        return result

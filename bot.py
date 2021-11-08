@@ -11,6 +11,7 @@ from keyboards import KeyboardsManager
 from dialog_mashine import DialogMashine
 from mashine_handlers import MashineHandlers
 from callback_handlers import CallbackHandlers
+from buttons_handlers import ButtonsHandlers
 
 TOKEN = "1614502276:AAFGR_oVKF89-KyrZDKrO5ryeF24yf8Icro"
 
@@ -30,6 +31,8 @@ class CustomBot:
         self.callback_handles = CallbackHandlers(self.bot, self.dp,
                                                 self.db, self.dialog_mashine,
                                                 self.keyboards)
+        self.buttons_handlers = ButtonsHandlers(self.bot, self.dp,
+                                                self.db)
 
     def start(self):
         # Главное меню
@@ -81,6 +84,9 @@ class CustomBot:
 
         # Обработка callback'ов
         self.callback_handles.handlers()
+
+        # Обоработка нажатий на кнопки
+        self.buttons_handlers.handlers()
 
         executor.start_polling(self.dp, skip_updates=True)
 
