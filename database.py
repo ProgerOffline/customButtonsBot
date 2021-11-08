@@ -7,9 +7,9 @@ class DatabaseManager:
 	def __init__(self):
 		pass
 
-	def get_message(self, id):
+	def get_message_with_id(self, id):
 		"""
-		Возвращает сообщение по его id
+		Получение сообщения по его id
 		:param id идентификатор сообщения
 		:return str
 		"""
@@ -26,9 +26,9 @@ class DatabaseManager:
 
 	def get_buttons(self):
 		"""
-		Возвращает кортеж со всеми кнопками
+		Получение всех кнопок
 		:param none
-		:return buttons cortege
+		:return cortege
 		"""
 		connect = sqlite3.connect("data.db")
 		with connect:
@@ -39,3 +39,20 @@ class DatabaseManager:
 				""").fetchall()
 
 		return result
+
+	def get_admins(self):
+		"""
+		Получение идентификаторов всех аккаунтов
+		у который есть доступы к админ панели
+		:param none
+		:return cortege
+		"""
+		connect = sqlite3.connect("data.db")
+		with connect:
+			cursor = connect.cursor()
+			result = cursor.execute("""
+					SELECT user_id
+					FROM admins
+				""").fetchall()
+
+		return result[0]
