@@ -10,6 +10,7 @@ from database import DatabaseManager
 from keyboards import KeyboardsManager
 from dialog_mashine import DialogMashine
 from mashine_handlers import MashineHandlers
+from callback_handlers import CallbackHandlers
 
 TOKEN = "1614502276:AAFGR_oVKF89-KyrZDKrO5ryeF24yf8Icro"
 
@@ -22,6 +23,9 @@ class CustomBot:
         self.db = DatabaseManager()
         self.keyboards = KeyboardsManager(self.db)
         self.dialog_mashine = DialogMashine()
+
+        self.callback_handles = CallbackHandlers(self.bot, self.dp,
+                                                self.db, self.dialog_mashine)
         self.mashine_handlers = MashineHandlers(self.bot, self.dp,
                                                 self.db, self.dialog_mashine)
 
@@ -43,6 +47,7 @@ class CustomBot:
                 await self.bot.send_message(
                         chat_id=message.chat.id,
                         text=self.db.get_message_with_id("2"),
+                        reply_markup=self.keyboards.admin(),
                     )
 
             else:
@@ -71,6 +76,9 @@ class CustomBot:
 
         # Обработка машины состояний
         self.mashine_handlers.handlers()
+
+        # Обработка callback'ов
+        self.callback_handles.handlers()
 
         executor.start_polling(self.dp, skip_updates=True)
 
