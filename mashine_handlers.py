@@ -26,3 +26,18 @@ class MashineHandlers:
                     chat_id=message.chat.id,
                     text=self.db.get_message_with_id("5"),
                 )
+
+        # Изменение текста на кнопке
+        @self.dp.message_handler(state=self.dialog_mashine.edit_button)
+        async def process_edit_btn(message: types.Message, state: FSMContext):
+            async with state.proxy() as data:
+                btn_id = data['btn_id']
+
+            self.db.change_button_name_with_id(btn_id, message.text)
+            await self.bot.send_message(
+                    chat_id=message.chat.id,
+                    text=self.db.get_message_with_id("9"),
+                    reply_markup=self.keyboards.edit_buttons(),
+                )
+
+            await state.finish()

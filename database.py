@@ -10,7 +10,7 @@ class DatabaseManager:
     def get_message_with_id(self, id):
         """
         Получение сообщения по его id
-        :param id идентификатор сообщения
+        :param message_id
         :return str
         """
         connect = sqlite3.connect("data.db")

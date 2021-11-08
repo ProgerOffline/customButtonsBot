@@ -24,10 +24,11 @@ class CustomBot:
         self.keyboards = KeyboardsManager(self.db)
         self.dialog_mashine = DialogMashine()
 
-        self.callback_handles = CallbackHandlers(self.bot, self.dp,
-                                                self.db, self.dialog_mashine)
         self.mashine_handlers = MashineHandlers(self.bot, self.dp,
                                                 self.db, self.dialog_mashine)
+        self.callback_handles = CallbackHandlers(self.bot, self.dp,
+                                                self.db, self.dialog_mashine,
+                                                self.keyboards)
 
     def start(self):
         # Главное меню
@@ -47,7 +48,7 @@ class CustomBot:
                 await self.bot.send_message(
                         chat_id=message.chat.id,
                         text=self.db.get_message_with_id("2"),
-                        reply_markup=self.keyboards.admin(),
+                        reply_markup=self.keyboards.edit_buttons(),
                     )
 
             else:
