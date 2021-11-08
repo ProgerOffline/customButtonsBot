@@ -13,9 +13,8 @@ class CallbackHandlers:
 
     def handlers(self):
         @self.dp.callback_query_handler(lambda c: c.data)
-        async def process_callback(call: types.CallbackQuery, state: FSMContext):
+        async def callback(call: types.CallbackQuery, state: FSMContext):
             await self.bot.answer_callback_query(call.id)
-            print(f"Button pressed {call.data}")
             button = call.data
 
             if button.split(":")[0] == "admin":
@@ -73,8 +72,20 @@ class CallbackHandlers:
 
                     # Удаление кнопки
                     elif cmd == "remove":
-                        pass
+                        btn_id = button.split(":")[3]
+
+                        self.db.remove_button(btn_id)
+                        await self.bot.edit_message_text(
+                                chat_id=call.message.chat.id,
+                                message_id=call.message.message_id,
+                                text=self.db.get_message_with_id("12"),
+                            )
 
                     # Добавление кнопки
                     elif cmd == "add":
-                        pass
+                        await self.dialog_mashine.add_button_step_1.set()
+                        await self.bot.edit_message_text(
+                                chat_id=call.message.chat.id,
+                                message_id=call.message.message_id,
+                                text=self.db.get_message_with_id("13"),
+                            )

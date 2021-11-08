@@ -13,15 +13,22 @@ class KeyboardsManager:
         :param none
         :return keyboard
         """
-        keyboard = types.ReplyKeyboardMarkup(row_width=1, resize_keyboard=True)
-        
+        keyboard = {
+            "keyboard": [], 
+            "resize_keyboard": True,
+        }
+
+        template = [
+                [], [], [], [],
+            ]
+
         buttons = self.db.get_buttons()
         for button in buttons:
-            btn = types.KeyboardButton(
-                    text=button[1],
-                )
-            keyboard.add(btn)
+            row = int(button[0]) - 1
+            text = button[1]
+            template[row].append(text)
 
+        keyboard['keyboard'] = template
         return keyboard
 
     def edit_buttons(self):
@@ -37,7 +44,13 @@ class KeyboardsManager:
                     text=button[1],
                     callback_data=f"admin:buttons:menu:{button[0]}",
                 )
-            keyboard.add(btn)
+            keyboard.add(btn)   
+
+        btn = types.InlineKeyboardButton(
+                text="Добавить кнопку",
+                callback_data=f"admin:buttons:add",
+            )
+        keyboard.add(btn)
         return keyboard
 
     def button_menu(self, id):

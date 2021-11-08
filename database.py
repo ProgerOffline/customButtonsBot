@@ -109,4 +109,41 @@ class DatabaseManager:
                    WHERE id = ?
                 """, (text, id, ))
 
-            connect.commit()        
+            connect.commit() 
+
+    def remove_button(self, id):
+        """
+        Удаляет кнопку
+        :param button_id
+        :return none
+        """             
+        connect = sqlite3.connect("data.db")
+        with connect:
+            cursor = connect.cursor()
+            cursor.execute("""
+                    DELETE
+                    FROM markup
+                    WHERE id = ?
+                """, (id, ))
+
+            connect.commit() 
+
+    def create_button(self, text, msg, row):
+        """
+        Добавляет кнопку
+        :param text
+        :param message
+        :param row
+        :return none
+        """    
+        connect = sqlite3.connect("data.db")
+        with connect:
+            cursor = connect.cursor()
+            cursor.execute("""
+                    INSERT INTO markup
+                    ( row, text, message )
+                    VALUES
+                    ( ?, ?, ? )
+                """, (row, text, msg, ))
+
+            connect.commit()         
