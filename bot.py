@@ -19,7 +19,7 @@ class CustomBot:
 		async def process_start(message: types.Message):
 			await self.bot.send_message(
 					chat_id=message.chat.id,
-					text="Hello",
+					text=message.text,
 				)
 
 		executor.start_polling(self.dp, skip_updates=True)
