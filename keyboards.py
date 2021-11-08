@@ -49,7 +49,7 @@ class KeyboardsManager:
         keyboard = types.InlineKeyboardMarkup(row_width=1, resize_keyboard=True)
 
         btn1 = types.InlineKeyboardButton(
-                text="Изменить название",
+                text="Изменить текст",
                 callback_data=f"admin:buttons:text:{id}",
             )
 

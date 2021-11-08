@@ -25,7 +25,8 @@ class CustomBot:
         self.dialog_mashine = DialogMashine()
 
         self.mashine_handlers = MashineHandlers(self.bot, self.dp,
-                                                self.db, self.dialog_mashine)
+                                                self.db, self.dialog_mashine,
+                                                self.keyboards)
         self.callback_handles = CallbackHandlers(self.bot, self.dp,
                                                 self.db, self.dialog_mashine,
                                                 self.keyboards)

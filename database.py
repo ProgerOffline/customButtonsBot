@@ -74,3 +74,39 @@ class DatabaseManager:
                 """, (user_id, ))
 
             connect.commit()
+
+    def change_button_text_with_id(self, id, text):
+        """
+        Изменяет текст на кнопке
+        :param button_id
+        :param new_text
+        :return none
+        """        
+        connect = sqlite3.connect("data.db")
+        with connect:
+            cursor = connect.cursor()
+            cursor.execute("""
+                   UPDATE markup
+                   SET text = ?
+                   WHERE id = ?
+                """, (text, id, ))
+
+            connect.commit()
+
+    def change_button_message_with_id(self, id, text):
+        """
+        Изменяет текст сообщения, который присылает кнопка
+        :param button_id
+        :param new_text
+        :return none
+        """        
+        connect = sqlite3.connect("data.db")
+        with connect:
+            cursor = connect.cursor()
+            cursor.execute("""
+                   UPDATE markup
+                   SET message = ?
+                   WHERE id = ?
+                """, (text, id, ))
+
+            connect.commit()        

@@ -50,7 +50,7 @@ class CallbackHandlers:
                         async with state.proxy() as data:
                             data["btn_id"] = btn_id
 
-                        await self.dialog_mashine.edit_button.set()
+                        await self.dialog_mashine.edit_text.set()
                         await self.bot.edit_message_text(
                                 chat_id=call.message.chat.id,
                                 message_id=call.message.message_id,
@@ -59,7 +59,17 @@ class CallbackHandlers:
 
                     # Изменение сообщения которое отправляет кнопка
                     elif cmd == "msg":
-                        pass
+                        btn_id = button.split(":")[3]
+
+                        async with state.proxy() as data:
+                            data["btn_id"] = btn_id
+
+                        await self.dialog_mashine.edit_message.set()
+                        await self.bot.edit_message_text(
+                                chat_id=call.message.chat.id,
+                                message_id=call.message.message_id,
+                                text=self.db.get_message_with_id("10"),
+                            )
 
                     # Удаление кнопки
                     elif cmd == "remove":
